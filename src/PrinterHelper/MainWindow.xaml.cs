@@ -80,6 +80,9 @@ namespace PrinterHelper
         public MainWindow()
         {
             InitializeComponent();
+            // Version in the title bar, so it is easy to tell which build is running.
+            var version = typeof(MainWindow).Assembly.GetName().Version;
+            Title = $"{AppTitle} {version.Major}.{version.Minor}.{version.Build}";
             PageList.ItemsSource = pages;
             pages.CollectionChanged += (s, e) => UpdatePageState();
             statusTimer.Tick += async (s, e) => await RefreshStatusAsync();

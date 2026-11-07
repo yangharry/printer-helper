@@ -10,7 +10,7 @@
     <AssemblyName>PrinterHelper</AssemblyName>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Product>프린터 도우미</Product>
     <AssemblyTitle>프린터 도우미</AssemblyTitle>
     <Copyright>Copyright (c) 2026 yangharry</Copyright>
