@@ -23,6 +23,11 @@ Samsung Xpress M2085FW(급지대 40장, 단면)에서 시험했습니다.
 
 ## 설치
 
+**내려받기**: [Releases](https://github.com/yangharry/printer-helper/releases/latest)에서 `PrinterHelper-버전-win.zip`을 받아 압축을 풀고 `PrinterHelper.exe`를 실행하세요. 빌드나 설치는 필요 없습니다.
+처음 실행할 때 "Windows의 PC 보호" 창이 뜨면 **추가 정보 → 실행**을 누르세요. 서명하지 않은 개인 프로젝트라서 나오는 경고입니다.
+
+**소스에서 빌드해 설치**:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File install.ps1
 ```
