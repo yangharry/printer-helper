@@ -463,12 +463,16 @@ namespace PrinterHelper
                 if (batch.Count == 0)
                 {
                     failure = "프린터가 아무 쪽도 보내지 않았습니다.";
-                    try
+                    // The feeder's state only explains a feeder scan; after a glass scan it would point at the wrong thing.
+                    if (source == ScanSource.Feeder)
                     {
-                        var after = await client.GetStatusAsync(CancellationToken.None);
-                        if (after.AdfState != null && AdfMessages.TryGetValue(after.AdfState, out var why)) failure += " " + why;
+                        try
+                        {
+                            var after = await client.GetStatusAsync(CancellationToken.None);
+                            if (after.AdfState != null && AdfMessages.TryGetValue(after.AdfState, out var why)) failure += " " + why;
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
             }
             catch (OperationCanceledException) when (ct.IsCancellationRequested)

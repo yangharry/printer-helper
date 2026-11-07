@@ -384,10 +384,13 @@ if ($pages.Count -eq 0) {
     $reason = $failure
     if (-not $reason) {
         $reason = '프린터가 아무 쪽도 보내지 않았습니다.'
-        try {
-            $adfState = [string](Get-ScannerStatus).AdfState
-            if ($AdfStateMessages[$adfState]) { $reason += ' ' + $AdfStateMessages[$adfState] }
-        } catch { }
+        # 급지대 상태는 급지대 스캔일 때만 원인이 됩니다. 유리판 스캔 뒤에 붙이면 엉뚱한 안내가 됩니다.
+        if ($Source -eq 'Feeder') {
+            try {
+                $adfState = [string](Get-ScannerStatus).AdfState
+                if ($AdfStateMessages[$adfState]) { $reason += ' ' + $AdfStateMessages[$adfState] }
+            } catch { }
+        }
     }
     Stop-WithError "스캔하지 못했습니다. $reason"
 }
