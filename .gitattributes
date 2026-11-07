@@ -1,0 +1,4 @@
+# Windows-only project: keep CRLF so .bat and Windows PowerShell scripts behave the same after checkout.
+* text=auto eol=crlf
+*.ico binary
+*.png binary

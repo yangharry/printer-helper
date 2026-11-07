@@ -1,0 +1,9 @@
+bin/
+obj/
+artifacts/
+.vs/
+*.user
+
+# Scanned documents never belong in the repository.
+scans/
+*.pdf

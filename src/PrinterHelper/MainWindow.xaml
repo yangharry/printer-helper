@@ -1,0 +1,173 @@
+<Window x:Class="PrinterHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="프린터 도우미" Width="1120" Height="760" MinWidth="960" MinHeight="580"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI, Malgun Gothic" FontSize="13"
+        Foreground="{StaticResource TextBrush}" Background="{StaticResource WindowBrush}"
+        AllowDrop="True" DragOver="Window_DragOver" Drop="Window_Drop"
+        Loaded="Window_Loaded" Closing="Window_Closing" PreviewKeyDown="Window_PreviewKeyDown">
+    <DockPanel>
+
+        <!-- Printer bar -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1" Padding="20,12">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse x:Name="StateDot" Width="10" Height="10" Fill="{StaticResource MutedBrush}" Margin="0,0,10,0"/>
+                    <TextBlock x:Name="PrinterNameText" Text="프린터 찾는 중…" FontSize="15" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="PrinterHostText" Foreground="{StaticResource MutedBrush}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    <Button Content="프린터 변경" Style="{StaticResource LinkButton}" Margin="12,0,0,0" VerticalAlignment="Center"
+                            Click="ChangePrinter_Click"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Border Style="{StaticResource Chip}"><TextBlock x:Name="PrinterStateText" Text="상태 확인 중"/></Border>
+                    <Border Style="{StaticResource Chip}"><TextBlock x:Name="TonerText" Text="토너 -"/></Border>
+                    <Border Style="{StaticResource Chip}"><TextBlock x:Name="FeederText" Text="급지대 -"/></Border>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Status line -->
+        <Border DockPanel.Dock="Bottom" Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0" Padding="20,8">
+            <TextBlock x:Name="StatusText" TextTrimming="CharacterEllipsis" Foreground="{StaticResource MutedBrush}"
+                       Text="급지대에 종이를 넣고 [스캔]을 누르세요."/>
+        </Border>
+
+        <!-- Left: scan and document actions -->
+        <Border DockPanel.Dock="Left" Width="260" Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="20,18,20,20">
+                    <TextBlock Text="스캔" Style="{StaticResource SectionTitle}"/>
+
+                    <TextBlock Text="원본" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox x:Name="SourceCombo">
+                        <ComboBoxItem Tag="Auto" Content="자동 (급지대 우선)"/>
+                        <ComboBoxItem Tag="Feeder" Content="급지대 (여러 장)"/>
+                        <ComboBoxItem Tag="Platen" Content="유리판 (1장)"/>
+                    </ComboBox>
+
+                    <TextBlock Text="색상" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox x:Name="ColorCombo">
+                        <ComboBoxItem Tag="Gray" Content="흑백 (회색조)"/>
+                        <ComboBoxItem Tag="Color" Content="컬러"/>
+                    </ComboBox>
+
+                    <TextBlock Text="해상도" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox x:Name="DpiCombo"/>
+
+                    <TextBlock Text="용지 크기" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox x:Name="PaperCombo">
+                        <ComboBoxItem Tag="A4" Content="A4"/>
+                        <ComboBoxItem Tag="Letter" Content="Letter"/>
+                        <ComboBoxItem Tag="Legal" Content="Legal"/>
+                    </ComboBox>
+
+                    <Button x:Name="ScanButton" Content="스캔" Style="{StaticResource PrimaryButton}" Margin="0,18,0,0"
+                            Click="Scan_Click"/>
+                    <Button x:Name="CancelButton" Content="스캔 멈추기" Margin="0,8,0,0" Visibility="Collapsed"
+                            Click="Cancel_Click"/>
+                    <Button x:Name="BackSideButton" Content="뒷면 스캔해서 양면 합치기" Margin="0,8,0,0"
+                            ToolTip="앞면 스캔이 끝나고 나온 종이 묶음을 뒷면이 위로 오게 급지대에 다시 넣고 누르세요. 뒷면을 앞면 사이사이에 끼워 넣습니다."
+                            Click="BackSide_Click"/>
+
+                    <Separator Margin="0,22,0,18" Background="{StaticResource BorderBrush}"/>
+
+                    <TextBlock Text="문서" Style="{StaticResource SectionTitle}"/>
+                    <Button x:Name="AddFilesButton" Content="파일 추가 (PDF·그림)…" Click="AddFiles_Click"/>
+                    <Button x:Name="SaveButton" Content="PDF로 저장…" Margin="0,8,0,0" Click="Save_Click"/>
+                    <Button x:Name="PrintButton" Content="인쇄…" Margin="0,8,0,0" Click="Print_Click"/>
+                    <CheckBox x:Name="OpenAfterSaveCheck" Content="저장한 뒤 PDF 열기" Margin="0,12,0,0"/>
+
+                    <TextBlock Text="저장 폴더" Style="{StaticResource FieldLabel}" Margin="0,14,0,4"/>
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Content="열기" Margin="6,0,0,0" Padding="10,4" Click="OpenFolder_Click"/>
+                        <TextBlock x:Name="SaveFolderText" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                   Foreground="{StaticResource MutedBrush}"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Pages -->
+        <Grid Margin="20,14,20,14">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Margin="0,0,0,10">
+                <TextBlock x:Name="PageCountText" Text="페이지 없음" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="SwapDuplexButton" Content="양면 순서 바꾸기" Style="{StaticResource ToolButton}" Visibility="Collapsed"
+                            ToolTip="뒷면이 엉뚱한 앞면 뒤에 붙었으면 누르세요." Click="SwapDuplex_Click"/>
+                    <Button x:Name="RotateLeftButton" Content="왼쪽 회전" Style="{StaticResource ToolButton}" Click="RotateLeft_Click"/>
+                    <Button x:Name="RotateRightButton" Content="오른쪽 회전" Style="{StaticResource ToolButton}" Click="RotateRight_Click"/>
+                    <Button x:Name="MoveUpButton" Content="◀ 앞으로" Style="{StaticResource ToolButton}" Click="MoveUp_Click"/>
+                    <Button x:Name="MoveDownButton" Content="뒤로 ▶" Style="{StaticResource ToolButton}" Click="MoveDown_Click"/>
+                    <Button x:Name="DeleteButton" Content="삭제" Style="{StaticResource ToolButton}" Click="Delete_Click"/>
+                    <Button x:Name="ClearButton" Content="모두 지우기" Style="{StaticResource ToolButton}" Click="Clear_Click"/>
+                </StackPanel>
+            </DockPanel>
+
+            <ListBox x:Name="PageList" Grid.Row="1" SelectionMode="Extended" Background="Transparent" BorderThickness="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="PageList_SelectionChanged"
+                     MouseDoubleClick="PageList_MouseDoubleClick">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0,0,12,12"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="Frame" BorderThickness="2" BorderBrush="Transparent" CornerRadius="8" Padding="6"
+                                            Background="Transparent">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Frame" Property="Background" Value="#E5E7EB"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Frame" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                                            <Setter TargetName="Frame" Property="Background" Value="#DBEAFE"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="150">
+                            <Border Height="200" Background="White" BorderBrush="#D1D5DB" BorderThickness="1">
+                                <Image Source="{Binding Thumbnail}" Stretch="Uniform" Margin="3" RenderOptions.BitmapScalingMode="HighQuality">
+                                    <Image.LayoutTransform>
+                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                    </Image.LayoutTransform>
+                                </Image>
+                            </Border>
+                            <TextBlock Text="{Binding Number}" HorizontalAlignment="Center" Margin="0,6,0,0" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding Source}" HorizontalAlignment="Center" Foreground="{StaticResource MutedBrush}"
+                                       FontSize="11" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel x:Name="EmptyHint" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+                <TextBlock Text="아직 페이지가 없습니다" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                <TextBlock Margin="0,10,0,0" Foreground="{StaticResource MutedBrush}" TextAlignment="Center" LineHeight="22"
+                           Text="급지대에 종이를 넣고 [스캔]을 누르면 여러 장이 차례로 들어옵니다.&#10;PDF나 사진 파일을 이 창으로 끌어 놓아도 됩니다."/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>
