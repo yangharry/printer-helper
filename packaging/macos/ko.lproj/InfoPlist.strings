@@ -1,0 +1,3 @@
+/* The Korean name Finder, the Dock and the menu bar show. Info.plist keeps PrinterHelper, the bundle's file name, as the base name and sets LSHasLocalizedDisplayName: Finder shows this name only when the base name matches the file name. UTF-8 without BOM (plutil -lint accepts it). */
+CFBundleDisplayName = "프린터 도우미";
+CFBundleName = "프린터 도우미";

@@ -1,0 +1,4 @@
+# LF for the Python helper make-app.sh runs on macOS. The license texts stay byte for byte as upstream has them
+# (LF endings; freetype.txt is Latin-1), so no line-ending conversion there.
+*.py text eol=lf
+licenses/** -text

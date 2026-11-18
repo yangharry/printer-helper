@@ -1,0 +1,146 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PrinterHelper.App"
+             Name="프린터 도우미"
+             RequestedThemeVariant="Light">
+    <!-- The macOS application menu (otherwise Avalonia shows "About Avalonia" there). -->
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="프린터 도우미 정보" Click="About_Click"/>
+        </NativeMenu>
+    </NativeMenu.Menu>
+
+    <!-- The colors below are light-only, so the app stays light even when Windows or macOS is in dark mode. -->
+    <Application.Resources>
+        <SolidColorBrush x:Key="AccentBrush" Color="#2563EB"/>
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#1D4ED8"/>
+        <SolidColorBrush x:Key="WindowBrush" Color="#F3F4F6"/>
+        <SolidColorBrush x:Key="PanelBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#E5E7EB"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#6B7280"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#111827"/>
+        <SolidColorBrush x:Key="OkBrush" Color="#16A34A"/>
+        <SolidColorBrush x:Key="WarnBrush" Color="#D97706"/>
+        <SolidColorBrush x:Key="ErrorBrush" Color="#DC2626"/>
+
+        <!-- Plain flat button used for most actions. -->
+        <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="Background" Value="{StaticResource PanelBrush}"/>
+            <Setter Property="BorderBrush" Value="#D1D5DB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="MinHeight" Value="32"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Name="Chrome" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover /template/ Border#Chrome">
+                <Setter Property="Background" Value="#F3F4F6"/>
+            </Style>
+            <Style Selector="^:pressed /template/ Border#Chrome">
+                <Setter Property="Background" Value="#E5E7EB"/>
+            </Style>
+            <Style Selector="^:focus-visible /template/ Border#Chrome">
+                <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+            </Style>
+            <Style Selector="^:disabled">
+                <Setter Property="Opacity" Value="0.45"/>
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Style Selector="^:pointerover /template/ Border#Chrome">
+                <Setter Property="Background" Value="{StaticResource AccentHoverBrush}"/>
+            </Style>
+            <Style Selector="^:pressed /template/ Border#Chrome">
+                <Setter Property="Background" Value="{StaticResource AccentHoverBrush}"/>
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="ToolButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="Margin" Value="6,0,0,0"/>
+        </ControlTheme>
+
+        <ControlTheme x:Key="LinkButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" Background="Transparent"/>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover">
+                <Setter Property="Foreground" Value="{StaticResource AccentHoverBrush}"/>
+            </Style>
+        </ControlTheme>
+
+        <!-- One page in the page list: a card that turns blue when selected. -->
+        <ControlTheme x:Key="PageItem" TargetType="ListBoxItem">
+            <Setter Property="Margin" Value="0,0,12,12"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Name="Frame" BorderThickness="2" BorderBrush="Transparent" CornerRadius="8"
+                            Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover /template/ Border#Frame">
+                <Setter Property="Background" Value="#E5E7EB"/>
+            </Style>
+            <Style Selector="^:selected /template/ Border#Frame">
+                <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                <Setter Property="Background" Value="#DBEAFE"/>
+            </Style>
+        </ControlTheme>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme/>
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style Selector="TextBlock.field">
+            <Setter Property="Margin" Value="0,8,0,4"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        </Style>
+        <Style Selector="Border.chip">
+            <Setter Property="Background" Value="#F3F4F6"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="10,3"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="StackPanel.side > Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+    </Application.Styles>
+</Application>

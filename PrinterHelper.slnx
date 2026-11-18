@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PrinterHelper.Core/PrinterHelper.Core.csproj" />
+    <Project Path="src/PrinterHelper/PrinterHelper.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PrinterHelper.Tests/PrinterHelper.Tests.csproj" />
+  </Folder>
+</Solution>

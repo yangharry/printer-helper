@@ -44,15 +44,20 @@ if ($Uninstall) {
     exit 0
 }
 
-if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
-    Write-Host '.NET SDK가 필요합니다: https://dotnet.microsoft.com/download' -ForegroundColor Red
+if (-not (Get-Command dotnet -ErrorAction SilentlyContinue) -or -not (& dotnet --list-sdks | Select-String '^1\d\.')) {
+    Write-Host '.NET 10 SDK가 필요합니다: https://dotnet.microsoft.com/download/dotnet/10.0' -ForegroundColor Red
+    Write-Host '빌드하지 않고 쓰려면 GitHub Releases에서 Windows용 zip을 받으세요.' -ForegroundColor Red
     exit 1
 }
 
 $publish = Join-Path $root 'artifacts\publish'
 if (Test-Path $publish) { Remove-Item $publish -Recurse }
 Write-Host '빌드하는 중...'
-& dotnet publish (Join-Path $root 'src\PrinterHelper\PrinterHelper.csproj') -c Release -o $publish --nologo -v quiet
+$env:AVALONIA_TELEMETRY_OPTOUT = '1'
+# One self-contained exe: the PC needs no .NET runtime to run it.
+& dotnet publish (Join-Path $root 'src\PrinterHelper\PrinterHelper.csproj') -c Release -r win-x64 --self-contained `
+    -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true `
+    -p:DebugType=None -o $publish --nologo -v quiet
 if ($LASTEXITCODE -ne 0) {
     Write-Host '빌드에 실패했습니다.' -ForegroundColor Red
     exit 1

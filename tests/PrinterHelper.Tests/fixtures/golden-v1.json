@@ -1,0 +1,18 @@
+{
+  "files": {
+    "photo-exif6.jpg": [{"width": 64, "height": 48, "components": 3, "dpi": 72, "rotation": 90, "passthrough": true}],
+    "scan-gray-300.jpg": [{"width": 248, "height": 351, "components": 1, "dpi": 300, "rotation": 0, "passthrough": true}],
+    "png-alpha-96.png": [{"width": 40, "height": 30, "components": 3, "dpi": 95.987, "rotation": 0, "passthrough": false}],
+    "png-gray-150.png": [{"width": 60, "height": 40, "components": 1, "dpi": 149.987, "rotation": 0, "passthrough": false}],
+    "bmp-24-200.bmp": [{"width": 50, "height": 70, "components": 3, "dpi": 200, "rotation": 0, "passthrough": false}],
+    "bmp-1bit-100.bmp": [{"width": 64, "height": 32, "components": 3, "dpi": 100, "rotation": 0, "passthrough": false}],
+    "gif-2frames.gif": [{"width": 30, "height": 20, "components": 3, "dpi": 96, "rotation": 0, "passthrough": false}],
+    "tiff-2page-gray-200.tif": [{"width": 80, "height": 110, "components": 1, "dpi": 200, "rotation": 0, "passthrough": false}, {"width": 110, "height": 80, "components": 1, "dpi": 200, "rotation": 0, "passthrough": false}],
+    "tiff-fax-g4.tif": [{"width": 1728, "height": 2244, "components": 1, "dpi": 208.948, "rotation": 0, "passthrough": false}],
+    "tiff-color-300.tif": [{"width": 90, "height": 60, "components": 3, "dpi": 300, "rotation": 0, "passthrough": false}],
+    "pdf-3pages.pdf": [{"width": 1654, "height": 2339, "components": 3, "dpi": 200, "rotation": 0, "passthrough": false}, {"width": 2200, "height": 1700, "components": 3, "dpi": 200, "rotation": 0, "passthrough": false}, {"width": 2000, "height": 1600, "components": 3, "dpi": 200, "rotation": 0, "passthrough": false}],
+    "png-gray-nophys.png": [{"width": 20, "height": 10, "components": 1, "dpi": 96, "rotation": 0, "passthrough": false}],
+    "jpeg-nojfif.jpg": [{"width": 248, "height": 351, "components": 1, "dpi": 96, "rotation": 0, "passthrough": true}]
+  },
+  "pdfWriterSha256": "4cc11008037c0231e9e2e1dfae63f5c12486ca49f2b58f597710cad611338677"
+}

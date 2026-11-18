@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Everything except the window: scanning, importing, PDF writing, discovery and printing. No Avalonia here. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>PrinterHelper</RootNamespace>
+    <AssemblyName>PrinterHelper.Core</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Must match the SkiaSharp that Avalonia 11.3 renders with. -->
+    <PackageReference Include="SkiaSharp" Version="2.88.9" />
+    <PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.660" />
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="160.0.8165" />
+    <PackageReference Include="bblanchon.PDFium.macOS" Version="160.0.8165" />
+    <PackageReference Include="System.Management" Version="10.0.15" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PrinterHelper.Tests" />
+    <InternalsVisibleTo Include="PrinterHelper" />
+  </ItemGroup>
+
+</Project>

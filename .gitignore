@@ -1,9 +1,15 @@
 bin/
 obj/
 artifacts/
+out/
 .vs/
 *.user
 
 # Scanned documents never belong in the repository.
 scans/
 *.pdf
+# ...except the synthetic test fixtures (gradients, no real documents).
+!tests/PrinterHelper.Tests/fixtures/*.pdf
+
+# Local agent worktrees and settings
+.claude/

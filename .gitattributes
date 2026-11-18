@@ -1,4 +1,14 @@
-# Windows-only project: keep CRLF so .bat and Windows PowerShell scripts behave the same after checkout.
+# CRLF for the Windows scripts (.bat, Windows PowerShell) and sources; LF for files macOS tools read.
 * text=auto eol=crlf
+*.sh text eol=lf
+*.plist text eol=lf
+*.strings text eol=lf
+*.yml text eol=lf
 *.ico binary
+*.icns binary
 *.png binary
+*.jpg binary
+*.bmp binary
+*.gif binary
+*.tif binary
+*.pdf binary

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.yangharry.printerhelper</string>
+	<key>CFBundleExecutable</key>
+	<string>PrinterHelper</string>
+	<!-- The bundle's file name. Finder shows the localized name from ko.lproj/InfoPlist.strings only when the base
+	     CFBundleDisplayName matches the file name (PrinterHelper.app). -->
+	<key>CFBundleName</key>
+	<string>PrinterHelper</string>
+	<key>CFBundleDisplayName</key>
+	<string>PrinterHelper</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>ko</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ko</string>
+	</array>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.0</string>
+	<key>CFBundleIconFile</key>
+	<string>PrinterHelper</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (c) 2026 yangharry</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<!-- The window is drawn in light colors only; keep the title bar and system dialogs light as well. -->
+	<key>NSRequiresAquaSystemAppearance</key>
+	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>같은 네트워크의 복합기를 찾아 스캔하고 상태를 읽습니다.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_uscan._tcp</string>
+		<string>_uscans._tcp</string>
+		<string>_ipp._tcp</string>
+		<string>_ipps._tcp</string>
+	</array>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>스캔한 PDF를 문서/Scans 폴더에 저장합니다.</string>
+	<key>LSAppNapIsDisabled</key>
+	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>PDF 문서</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.adobe.pdf</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>그림</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.jpeg</string>
+				<string>public.png</string>
+				<string>com.microsoft.bmp</string>
+				<string>com.compuserve.gif</string>
+				<string>public.tiff</string>
+				<string>org.webmproject.webp</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

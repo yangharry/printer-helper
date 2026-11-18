@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Version>2.0.0</Version>
+    <Product>프린터 도우미</Product>
+    <Copyright>Copyright (c) 2026 yangharry</Copyright>
+    <!-- Windows-only APIs (WMI, GDI printing) are guarded with OperatingSystem.IsWindows(); keep the analyzer honest. -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+</Project>
